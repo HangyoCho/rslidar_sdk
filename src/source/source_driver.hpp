@@ -128,6 +128,43 @@ inline void SourceDriver::init(const YAML::Node& config)
   yamlRead<float>(driver_config, "split_angle", driver_param.decoder_param.split_angle, 0);
   yamlRead<uint16_t>(driver_config, "num_blks_split", driver_param.decoder_param.num_blks_split, 0);
 
+  // Per-channel range bias correction (optional). If a YAML path is provided and
+  // exists, load it and stuff into decoder_param.chan_range_offsets so the decoder
+  // applies it at the ToF/range level (driver-side correction).
+  std::string range_offsets_yaml;
+  yamlRead<std::string>(driver_config, "range_offsets_yaml", range_offsets_yaml, "");
+  if (!range_offsets_yaml.empty())
+  {
+    try
+    {
+      YAML::Node y = YAML::LoadFile(range_offsets_yaml);
+      const int rc = y["ring_count"] ? y["ring_count"].as<int>() : 0;
+      if (rc > 0 && y["rings"])
+      {
+        std::vector<float>& v = driver_param.decoder_param.chan_range_offsets;
+        v.assign(rc, 0.0f);
+        for (const auto& r : y["rings"])
+        {
+          const int idx = r["ring"].as<int>();
+          const float off = r["offset_m"] ? r["offset_m"].as<float>() : 0.0f;
+          if (idx >= 0 && idx < rc) v[idx] = off;
+        }
+        RS_INFO << "Loaded per-channel range offsets from " << range_offsets_yaml
+                << " (" << v.size() << " entries)" << RS_REND;
+      }
+      else
+      {
+        RS_WARNING << "range_offsets_yaml has no ring_count/rings fields: "
+                   << range_offsets_yaml << RS_REND;
+      }
+    }
+    catch (const std::exception& e)
+    {
+      RS_ERROR << "Failed to parse range_offsets_yaml '" << range_offsets_yaml
+               << "': " << e.what() << RS_REND;
+    }
+  }
+
   // transform
   yamlRead<float>(driver_config, "x", driver_param.decoder_param.transform_param.x, 0);
   yamlRead<float>(driver_config, "y", driver_param.decoder_param.transform_param.y, 0);

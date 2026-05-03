@@ -30,6 +30,11 @@ lidar:
       start_angle: 0               #  Start angle of point cloud
       end_angle: 360               #  End angle of point cloud
 
+                                   #  Per-channel range bias correction (driver-side).
+                                   #  YAML produced by lidar_range_calibrator's save_now.
+                                   #  Empty / missing => no correction (raw output).
+      range_offsets_yaml: /home/chg/Desktop/ws_lidar_calibration/src/lidar_range_corrector/config/range_offsets.20260503_215907.bak.yaml
+
                                    #  When msg_source is 3, the following parameters will be used
       pcap_repeat: true            #  true: The pcap bag will repeat play   
       pcap_rate: 1.0               #  Rate to read the pcap file

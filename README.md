@@ -1,3 +1,72 @@
+# Fork: per-channel range bias correction (driver-side)
+
+This fork adds **driver-side per-channel range bias correction** to rslidar_sdk.
+The decoder subtracts a per-channel offset (loaded from a YAML file) from the
+raw ToF range **before** converting to (x, y, z). The published
+`/rslidar_points` is therefore already corrected — no extra post-processing
+node is needed.
+
+The math: if a channel reports `d` for a wall point and its true range is
+`d - δ`, then `δ` is the channel's range bias. The decoder applies
+`distance := distance - chan_range_offsets[chan_id]` so the resulting point
+sits on the wall plane.
+
+## Changes against upstream rslidar_sdk
+
+- `rs_driver` is **vendored** in `src/rs_driver/` (no longer a git submodule).
+- `rs_driver/src/rs_driver/driver/driver_param.hpp` — `RSDecoderParam` gains a
+  `std::vector<float> chan_range_offsets` field.
+- `rs_driver/src/rs_driver/driver/decoder/decoder_RSAIRY.hpp` — decoder copies
+  the table at construction and applies the offset in
+  `internDecodeMsopPkt` right after the raw distance is computed, before the
+  range-section check and the (x, y, z) calculation.
+- `src/source/source_driver.hpp` — parses a new `range_offsets_yaml` config
+  field and fills `decoder_param.chan_range_offsets`.
+- `config/config.yaml` — exposes the new `range_offsets_yaml` option.
+
+Only **RSAIRY** is patched. Adding the same correction to other lidar models
+is a one-line edit in their respective `decoder_<MODEL>.hpp`.
+
+## Usage
+
+1. Produce a YAML file with per-ring offsets (e.g. with a calibrator that
+   collects wall residuals per channel). The schema:
+
+   ```yaml
+   ring_count: 96
+   rings:
+     - { ring: 0, offset_m:  0.012 }   # subtract 12 mm of bias from ring 0
+     - { ring: 1, offset_m: -0.008 }
+     # ... one entry per ring
+   ```
+
+   `offset_m` is the value subtracted from the raw range for that channel
+   (positive offset moves points closer to the sensor along their ray).
+   Extra fields are ignored.
+
+2. Point the SDK at the YAML in `config/config.yaml`:
+
+   ```yaml
+   driver:
+     # ...
+     range_offsets_yaml: /absolute/path/to/range_offsets.yaml
+   ```
+
+   Empty / missing path disables correction (raw output).
+
+3. Launch as usual. On startup the decoder logs:
+
+   ```
+   Loaded per-channel range offsets from /.../range_offsets.yaml (96 entries)
+   DecoderRSAIRY: per-channel range bias loaded
+       (96 entries, 68 non-zero, max|offset|=16.09 mm)
+   ```
+
+   `/rslidar_points` is now corrected at the ToF/range level. No corrector
+   node downstream.
+
+---
+
 # 1 **rslidar_sdk**
 
  [中文介绍](README_CN.md)
