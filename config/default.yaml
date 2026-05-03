@@ -1,0 +1,112 @@
+# Default per-channel range bias template (no correction).
+#
+# Schema:
+#   ring_count: <int>           total number of channels on the lidar
+#   rings:                      list of per-channel offsets, in meters
+#     - { ring: <int>, offset_m: <float> }
+#
+# offset_m is subtracted from the raw measured range BEFORE the decoder
+# converts to (x, y, z). A positive offset moves the resulting point
+# closer to the sensor along its ray. Missing rings default to 0.
+#
+# Generate one of these per sensor with the lidar_range_calibrator tool
+# and reference it from `range_offsets_yaml` in config.yaml.
+
+ring_count: 96
+rings:
+  - { ring:  0, offset_m: 0.0 }
+  - { ring:  1, offset_m: 0.0 }
+  - { ring:  2, offset_m: 0.0 }
+  - { ring:  3, offset_m: 0.0 }
+  - { ring:  4, offset_m: 0.0 }
+  - { ring:  5, offset_m: 0.0 }
+  - { ring:  6, offset_m: 0.0 }
+  - { ring:  7, offset_m: 0.0 }
+  - { ring:  8, offset_m: 0.0 }
+  - { ring:  9, offset_m: 0.0 }
+  - { ring: 10, offset_m: 0.0 }
+  - { ring: 11, offset_m: 0.0 }
+  - { ring: 12, offset_m: 0.0 }
+  - { ring: 13, offset_m: 0.0 }
+  - { ring: 14, offset_m: 0.0 }
+  - { ring: 15, offset_m: 0.0 }
+  - { ring: 16, offset_m: 0.0 }
+  - { ring: 17, offset_m: 0.0 }
+  - { ring: 18, offset_m: 0.0 }
+  - { ring: 19, offset_m: 0.0 }
+  - { ring: 20, offset_m: 0.0 }
+  - { ring: 21, offset_m: 0.0 }
+  - { ring: 22, offset_m: 0.0 }
+  - { ring: 23, offset_m: 0.0 }
+  - { ring: 24, offset_m: 0.0 }
+  - { ring: 25, offset_m: 0.0 }
+  - { ring: 26, offset_m: 0.0 }
+  - { ring: 27, offset_m: 0.0 }
+  - { ring: 28, offset_m: 0.0 }
+  - { ring: 29, offset_m: 0.0 }
+  - { ring: 30, offset_m: 0.0 }
+  - { ring: 31, offset_m: 0.0 }
+  - { ring: 32, offset_m: 0.0 }
+  - { ring: 33, offset_m: 0.0 }
+  - { ring: 34, offset_m: 0.0 }
+  - { ring: 35, offset_m: 0.0 }
+  - { ring: 36, offset_m: 0.0 }
+  - { ring: 37, offset_m: 0.0 }
+  - { ring: 38, offset_m: 0.0 }
+  - { ring: 39, offset_m: 0.0 }
+  - { ring: 40, offset_m: 0.0 }
+  - { ring: 41, offset_m: 0.0 }
+  - { ring: 42, offset_m: 0.0 }
+  - { ring: 43, offset_m: 0.0 }
+  - { ring: 44, offset_m: 0.0 }
+  - { ring: 45, offset_m: 0.0 }
+  - { ring: 46, offset_m: 0.0 }
+  - { ring: 47, offset_m: 0.0 }
+  - { ring: 48, offset_m: 0.0 }
+  - { ring: 49, offset_m: 0.0 }
+  - { ring: 50, offset_m: 0.0 }
+  - { ring: 51, offset_m: 0.0 }
+  - { ring: 52, offset_m: 0.0 }
+  - { ring: 53, offset_m: 0.0 }
+  - { ring: 54, offset_m: 0.0 }
+  - { ring: 55, offset_m: 0.0 }
+  - { ring: 56, offset_m: 0.0 }
+  - { ring: 57, offset_m: 0.0 }
+  - { ring: 58, offset_m: 0.0 }
+  - { ring: 59, offset_m: 0.0 }
+  - { ring: 60, offset_m: 0.0 }
+  - { ring: 61, offset_m: 0.0 }
+  - { ring: 62, offset_m: 0.0 }
+  - { ring: 63, offset_m: 0.0 }
+  - { ring: 64, offset_m: 0.0 }
+  - { ring: 65, offset_m: 0.0 }
+  - { ring: 66, offset_m: 0.0 }
+  - { ring: 67, offset_m: 0.0 }
+  - { ring: 68, offset_m: 0.0 }
+  - { ring: 69, offset_m: 0.0 }
+  - { ring: 70, offset_m: 0.0 }
+  - { ring: 71, offset_m: 0.0 }
+  - { ring: 72, offset_m: 0.0 }
+  - { ring: 73, offset_m: 0.0 }
+  - { ring: 74, offset_m: 0.0 }
+  - { ring: 75, offset_m: 0.0 }
+  - { ring: 76, offset_m: 0.0 }
+  - { ring: 77, offset_m: 0.0 }
+  - { ring: 78, offset_m: 0.0 }
+  - { ring: 79, offset_m: 0.0 }
+  - { ring: 80, offset_m: 0.0 }
+  - { ring: 81, offset_m: 0.0 }
+  - { ring: 82, offset_m: 0.0 }
+  - { ring: 83, offset_m: 0.0 }
+  - { ring: 84, offset_m: 0.0 }
+  - { ring: 85, offset_m: 0.0 }
+  - { ring: 86, offset_m: 0.0 }
+  - { ring: 87, offset_m: 0.0 }
+  - { ring: 88, offset_m: 0.0 }
+  - { ring: 89, offset_m: 0.0 }
+  - { ring: 90, offset_m: 0.0 }
+  - { ring: 91, offset_m: 0.0 }
+  - { ring: 92, offset_m: 0.0 }
+  - { ring: 93, offset_m: 0.0 }
+  - { ring: 94, offset_m: 0.0 }
+  - { ring: 95, offset_m: 0.0 }

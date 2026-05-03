@@ -1,0 +1,482 @@
+ring_count: 96
+rings:
+  - ring: 0
+    offset_m: 0
+    samples: 0
+    median_residual: -0.004949630877077128
+    valid: false
+  - ring: 1
+    offset_m: 0
+    samples: 0
+    median_residual: 0.01385746504507102
+    valid: false
+  - ring: 2
+    offset_m: 0
+    samples: 0
+    median_residual: 0.01261838254874786
+    valid: false
+  - ring: 3
+    offset_m: 0
+    samples: 0
+    median_residual: 0.01823613648013543
+    valid: false
+  - ring: 4
+    offset_m: 0
+    samples: 0
+    median_residual: 0.005347705087468845
+    valid: false
+  - ring: 5
+    offset_m: 0
+    samples: 0
+    median_residual: -0.008513960593941735
+    valid: false
+  - ring: 6
+    offset_m: 0
+    samples: 0
+    median_residual: 0.008658497545705437
+    valid: false
+  - ring: 7
+    offset_m: 0
+    samples: 0
+    median_residual: 0.001753675979662076
+    valid: false
+  - ring: 8
+    offset_m: 0
+    samples: 0
+    median_residual: -0.01158830575921158
+    valid: false
+  - ring: 9
+    offset_m: 0
+    samples: 0
+    median_residual: -0.007438764028132453
+    valid: false
+  - ring: 10
+    offset_m: 0
+    samples: 0
+    median_residual: 0.005518253214378674
+    valid: false
+  - ring: 11
+    offset_m: 0
+    samples: 0
+    median_residual: 0.002351695275865336
+    valid: false
+  - ring: 12
+    offset_m: 0
+    samples: 0
+    median_residual: -0.01450254969028378
+    valid: false
+  - ring: 13
+    offset_m: 0
+    samples: 0
+    median_residual: -0.0139160747642999
+    valid: false
+  - ring: 14
+    offset_m: 0
+    samples: 0
+    median_residual: -0.01517726308857388
+    valid: false
+  - ring: 15
+    offset_m: 0
+    samples: 0
+    median_residual: -0.01660365382286345
+    valid: false
+  - ring: 16
+    offset_m: 0
+    samples: 0
+    median_residual: -0.01657025101791905
+    valid: false
+  - ring: 17
+    offset_m: 0
+    samples: 0
+    median_residual: -0.01341045049229422
+    valid: false
+  - ring: 18
+    offset_m: 0
+    samples: 0
+    median_residual: 0.0007436019568833907
+    valid: false
+  - ring: 19
+    offset_m: 0
+    samples: 0
+    median_residual: -0.009230801605267422
+    valid: false
+  - ring: 20
+    offset_m: 0
+    samples: 0
+    median_residual: -0.01528720652808873
+    valid: false
+  - ring: 21
+    offset_m: 0
+    samples: 0
+    median_residual: -0.00955583908242319
+    valid: false
+  - ring: 22
+    offset_m: 0
+    samples: 0
+    median_residual: -0.007334849504682824
+    valid: false
+  - ring: 23
+    offset_m: 0
+    samples: 0
+    median_residual: -0.005728599629784704
+    valid: false
+  - ring: 24
+    offset_m: 0
+    samples: 0
+    median_residual: 0.006093367376135271
+    valid: false
+  - ring: 25
+    offset_m: 0
+    samples: 0
+    median_residual: 0.007824774769519573
+    valid: false
+  - ring: 26
+    offset_m: 0
+    samples: 0
+    median_residual: 0.01538431716336367
+    valid: false
+  - ring: 27
+    offset_m: 0
+    samples: 0
+    median_residual: 0.004890259492262038
+    valid: false
+  - ring: 28
+    offset_m: 0
+    samples: 0
+    median_residual: 0.009746491427526803
+    valid: false
+  - ring: 29
+    offset_m: 0
+    samples: 0
+    median_residual: 0.006001136519560246
+    valid: false
+  - ring: 30
+    offset_m: 0
+    samples: 0
+    median_residual: -0.008502371717394474
+    valid: false
+  - ring: 31
+    offset_m: 0
+    samples: 0
+    median_residual: -0.005670990613659061
+    valid: false
+  - ring: 32
+    offset_m: 0
+    samples: 0
+    median_residual: 0.001516544189702763
+    valid: false
+  - ring: 33
+    offset_m: 0
+    samples: 0
+    median_residual: -0.005958940674403517
+    valid: false
+  - ring: 34
+    offset_m: 0
+    samples: 0
+    median_residual: 0.001843792939676014
+    valid: false
+  - ring: 35
+    offset_m: 0
+    samples: 0
+    median_residual: -0.00130176107058488
+    valid: false
+  - ring: 36
+    offset_m: 0
+    samples: 0
+    median_residual: 0.002791209738135617
+    valid: false
+  - ring: 37
+    offset_m: 0
+    samples: 0
+    median_residual: -0.001438709319524762
+    valid: false
+  - ring: 38
+    offset_m: 0
+    samples: 0
+    median_residual: 0.008027328981477413
+    valid: false
+  - ring: 39
+    offset_m: 0
+    samples: 0
+    median_residual: 0.002350699409148201
+    valid: false
+  - ring: 40
+    offset_m: 0
+    samples: 0
+    median_residual: 0.0002960225241464461
+    valid: false
+  - ring: 41
+    offset_m: 0
+    samples: 0
+    median_residual: -0.001759440273754532
+    valid: false
+  - ring: 42
+    offset_m: 0
+    samples: 0
+    median_residual: 0.004894842366115018
+    valid: false
+  - ring: 43
+    offset_m: 0
+    samples: 0
+    median_residual: -0.004306928953702371
+    valid: false
+  - ring: 44
+    offset_m: 0
+    samples: 0
+    median_residual: -0.009941401613628456
+    valid: false
+  - ring: 45
+    offset_m: 0
+    samples: 0
+    median_residual: -0.005869288959551012
+    valid: false
+  - ring: 46
+    offset_m: 0
+    samples: 0
+    median_residual: 0.003423547197680567
+    valid: false
+  - ring: 47
+    offset_m: 0
+    samples: 0
+    median_residual: 0.0001669069957357263
+    valid: false
+  - ring: 48
+    offset_m: 0
+    samples: 0
+    median_residual: 0.008716507457275162
+    valid: false
+  - ring: 49
+    offset_m: 0
+    samples: 0
+    median_residual: -0.01000485742745774
+    valid: false
+  - ring: 50
+    offset_m: 0
+    samples: 0
+    median_residual: 0.02583757987580554
+    valid: false
+  - ring: 51
+    offset_m: 0
+    samples: 0
+    median_residual: 0.02672537303928544
+    valid: false
+  - ring: 52
+    offset_m: 0
+    samples: 0
+    median_residual: 0.1542258488582546
+    valid: false
+  - ring: 53
+    offset_m: 0
+    samples: 0
+    median_residual: 0.08601399762601422
+    valid: false
+  - ring: 54
+    offset_m: 0
+    samples: 5
+    median_residual: 0.005900348353588904
+    valid: false
+  - ring: 55
+    offset_m: 0
+    samples: 50
+    median_residual: -0.04130140445272525
+    valid: true
+  - ring: 56
+    offset_m: 0
+    samples: 74
+    median_residual: -0.01420474260112307
+    valid: true
+  - ring: 57
+    offset_m: 0
+    samples: 52
+    median_residual: -0.04465535811871773
+    valid: true
+  - ring: 58
+    offset_m: 0
+    samples: 195
+    median_residual: -0.01697344744846286
+    valid: true
+  - ring: 59
+    offset_m: 0
+    samples: 206
+    median_residual: -0.02524823115772699
+    valid: true
+  - ring: 60
+    offset_m: 0
+    samples: 278
+    median_residual: -0.01746736756457675
+    valid: true
+  - ring: 61
+    offset_m: 0
+    samples: 318
+    median_residual: -0.02043082927889994
+    valid: true
+  - ring: 62
+    offset_m: 0
+    samples: 437
+    median_residual: -0.0127515681872428
+    valid: true
+  - ring: 63
+    offset_m: 0
+    samples: 460
+    median_residual: -0.0169567423725497
+    valid: true
+  - ring: 64
+    offset_m: 0
+    samples: 525
+    median_residual: -0.001466484084602802
+    valid: true
+  - ring: 65
+    offset_m: 0
+    samples: 522
+    median_residual: 0.005273919402936238
+    valid: true
+  - ring: 66
+    offset_m: 0
+    samples: 539
+    median_residual: 0.0126124767051251
+    valid: true
+  - ring: 67
+    offset_m: 0
+    samples: 507
+    median_residual: 0.005068375225159276
+    valid: true
+  - ring: 68
+    offset_m: 0
+    samples: 445
+    median_residual: 0.01161040053593014
+    valid: true
+  - ring: 69
+    offset_m: 0
+    samples: 403
+    median_residual: 0.007274297308458281
+    valid: true
+  - ring: 70
+    offset_m: 0
+    samples: 353
+    median_residual: 0.01283691565650412
+    valid: true
+  - ring: 71
+    offset_m: 0
+    samples: 354
+    median_residual: 0.009120822784407581
+    valid: true
+  - ring: 72
+    offset_m: 0
+    samples: 391
+    median_residual: -0.0002448532942767179
+    valid: true
+  - ring: 73
+    offset_m: 0
+    samples: 392
+    median_residual: -0.00269059156930391
+    valid: true
+  - ring: 74
+    offset_m: 0
+    samples: 449
+    median_residual: 0.007070363970255185
+    valid: true
+  - ring: 75
+    offset_m: 0
+    samples: 440
+    median_residual: 0.00174894383596901
+    valid: true
+  - ring: 76
+    offset_m: 0
+    samples: 427
+    median_residual: 0.007550807064759912
+    valid: true
+  - ring: 77
+    offset_m: 0
+    samples: 400
+    median_residual: 0.005937302733286779
+    valid: true
+  - ring: 78
+    offset_m: 0.01099812317079443
+    samples: 393
+    median_residual: 0.01533486990513961
+    valid: true
+  - ring: 79
+    offset_m: 0.01119330864478045
+    samples: 375
+    median_residual: 0.007619216239434397
+    valid: true
+  - ring: 80
+    offset_m: 0.00827895828346719
+    samples: 351
+    median_residual: 0.01674018693318689
+    valid: true
+  - ring: 81
+    offset_m: 0.01191594271953998
+    samples: 382
+    median_residual: 0.0212671802929339
+    valid: true
+  - ring: 82
+    offset_m: 0.01083565504956625
+    samples: 325
+    median_residual: 0.02570233819978945
+    valid: true
+  - ring: 83
+    offset_m: 0.009788390869878517
+    samples: 353
+    median_residual: 0.02666589151389633
+    valid: true
+  - ring: 84
+    offset_m: -0.01722505921882909
+    samples: 309
+    median_residual: 0.005065340872046556
+    valid: true
+  - ring: 85
+    offset_m: -0.02825406642365296
+    samples: 248
+    median_residual: -0.01197829503647447
+    valid: true
+  - ring: 86
+    offset_m: -0.0216516027682675
+    samples: 222
+    median_residual: -0.007032165642692698
+    valid: true
+  - ring: 87
+    offset_m: -0.0213893775415798
+    samples: 202
+    median_residual: -0.01340906321533716
+    valid: true
+  - ring: 88
+    offset_m: 0.02294729838925377
+    samples: 31
+    median_residual: 0.02261595050000711
+    valid: true
+  - ring: 89
+    offset_m: 0.007109795542673339
+    samples: 58
+    median_residual: 0.02159440902381037
+    valid: true
+  - ring: 90
+    offset_m: 0.01239977042785557
+    samples: 49
+    median_residual: 0.0234574058431581
+    valid: true
+  - ring: 91
+    offset_m: 0.01120203673392458
+    samples: 124
+    median_residual: 0.02355110191288388
+    valid: true
+  - ring: 92
+    offset_m: -0.01797226971692181
+    samples: 193
+    median_residual: 0.02177223437242745
+    valid: true
+  - ring: 93
+    offset_m: -0.02370522579361644
+    samples: 19
+    median_residual: 0.05613948041999343
+    valid: false
+  - ring: 94
+    offset_m: -0.02117219788256402
+    samples: 0
+    median_residual: 0.05647549664396961
+    valid: false
+  - ring: 95
+    offset_m: 0.00547794228475067
+    samples: 0
+    median_residual: 0.05724111382333681
+    valid: false
