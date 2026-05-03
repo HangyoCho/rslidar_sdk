@@ -33,7 +33,7 @@ lidar:
                                    #  Per-channel range bias correction (driver-side).
                                    #  YAML produced by lidar_range_calibrator's save_now.
                                    #  Empty / missing => no correction (raw output).
-      range_offsets_yaml: config/range_offsets.yaml   # Relative to the rslidar_sdk source root (PROJECT_PATH). Empty disables.
+      range_offsets_yaml: config/srx2_airy.yaml   # Relative to the rslidar_sdk source root (PROJECT_PATH). Empty disables.
 
                                    #  When msg_source is 3, the following parameters will be used
       pcap_repeat: true            #  true: The pcap bag will repeat play   
