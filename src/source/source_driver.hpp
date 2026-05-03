@@ -135,6 +135,14 @@ inline void SourceDriver::init(const YAML::Node& config)
   yamlRead<std::string>(driver_config, "range_offsets_yaml", range_offsets_yaml, "");
   if (!range_offsets_yaml.empty())
   {
+    // Resolve relative paths against PROJECT_PATH so the package is portable
+    // across machines (PROJECT_PATH is set in the top-level CMakeLists).
+#ifdef PROJECT_PATH
+    if (range_offsets_yaml.front() != '/')
+    {
+      range_offsets_yaml = std::string(PROJECT_PATH) + "/" + range_offsets_yaml;
+    }
+#endif
     try
     {
       YAML::Node y = YAML::LoadFile(range_offsets_yaml);

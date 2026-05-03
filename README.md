@@ -21,8 +21,11 @@ sits on the wall plane.
   `internDecodeMsopPkt` right after the raw distance is computed, before the
   range-section check and the (x, y, z) calculation.
 - `src/source/source_driver.hpp` — parses a new `range_offsets_yaml` config
-  field and fills `decoder_param.chan_range_offsets`.
-- `config/config.yaml` — exposes the new `range_offsets_yaml` option.
+  field, resolves relative paths against `PROJECT_PATH` (the SDK source
+  root), and fills `decoder_param.chan_range_offsets`.
+- `config/config.yaml` — exposes the new `range_offsets_yaml` option,
+  defaulting to `config/range_offsets.yaml` (i.e. drop your YAML in this
+  package's `config/` directory and the SDK picks it up).
 
 Only **RSAIRY** is patched. Adding the same correction to other lidar models
 is a one-line edit in their respective `decoder_<MODEL>.hpp`.
@@ -44,15 +47,19 @@ is a one-line edit in their respective `decoder_<MODEL>.hpp`.
    (positive offset moves points closer to the sensor along their ray).
    Extra fields are ignored.
 
-2. Point the SDK at the YAML in `config/config.yaml`:
+2. Drop the file in `rslidar_sdk/config/range_offsets.yaml` and point the SDK
+   at it via `config/config.yaml`:
 
    ```yaml
    driver:
      # ...
-     range_offsets_yaml: /absolute/path/to/range_offsets.yaml
+     range_offsets_yaml: config/range_offsets.yaml
    ```
 
-   Empty / missing path disables correction (raw output).
+   Paths are resolved against the package source root (`PROJECT_PATH`,
+   defined in the top-level `CMakeLists.txt`), so the relative path above
+   is portable across machines. Absolute paths are honored as-is. An empty
+   string disables the correction (raw output).
 
 3. Launch as usual. On startup the decoder logs:
 
