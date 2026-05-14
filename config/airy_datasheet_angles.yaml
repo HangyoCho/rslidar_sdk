@@ -1,0 +1,105 @@
+# alice_intrinsics_yaml for rslidar_sdk (decoder Path B).
+# vertical_angle is in radians. Only vertical_angle is populated here;
+# vertical_offset / horizontal_offset / azimuthal_offset are 0 (pure
+# per-channel elevation correction). When loaded, the decoder ignores
+# range_offsets_yaml.
+
+ring_count: 96
+use_alice_intrinsics: true
+scanlines:
+  - { ring: 0, vertical_angle: -0.001221730476, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 1, vertical_angle: 0.01535889742, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 2, vertical_angle: 0.03159045946, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 3, vertical_angle: 0.04817108736, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 4, vertical_angle: 0.0644026494, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 5, vertical_angle: 0.08063421144, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 6, vertical_angle: 0.09669124056, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 7, vertical_angle: 0.1130973355, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 8, vertical_angle: 0.1293288976, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 9, vertical_angle: 0.1455604596, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 10, vertical_angle: 0.1617920217, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 11, vertical_angle: 0.1781981166, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 12, vertical_angle: 0.1946042116, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 13, vertical_angle: 0.2110103066, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 14, vertical_angle: 0.2274164015, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 15, vertical_angle: 0.2439970294, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 16, vertical_angle: 0.2604031244, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 17, vertical_angle: 0.2769837523, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 18, vertical_angle: 0.2935643802, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 19, vertical_angle: 0.3101450081, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 20, vertical_angle: 0.326725636, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 21, vertical_angle: 0.3433062639, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 22, vertical_angle: 0.3598868918, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 23, vertical_angle: 0.3764675197, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 24, vertical_angle: 0.3928736146, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 25, vertical_angle: 0.4092797096, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 26, vertical_angle: 0.4258603375, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 27, vertical_angle: 0.4420918995, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 28, vertical_angle: 0.4586725274, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 29, vertical_angle: 0.4749040895, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 30, vertical_angle: 0.4913101844, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 31, vertical_angle: 0.5075417465, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 32, vertical_angle: 0.5239478414, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 33, vertical_angle: 0.5401794035, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 34, vertical_angle: 0.5564109655, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 35, vertical_angle: 0.5728170605, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 36, vertical_angle: 0.5888740896, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 37, vertical_angle: 0.6052801846, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 38, vertical_angle: 0.6216862796, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 39, vertical_angle: 0.6379178416, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 40, vertical_angle: 0.6544984695, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 41, vertical_angle: 0.6707300315, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 42, vertical_angle: 0.6871361265, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 43, vertical_angle: 0.7035422215, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 44, vertical_angle: 0.7199483164, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 45, vertical_angle: 0.7367034773, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 46, vertical_angle: 0.7532841052, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 47, vertical_angle: 0.7695156672, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 48, vertical_angle: 0.786270828, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 49, vertical_angle: 0.8028514559, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 50, vertical_angle: 0.8194320838, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 51, vertical_angle: 0.8360127117, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 52, vertical_angle: 0.8525933396, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 53, vertical_angle: 0.8691739675, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 54, vertical_angle: 0.8854055295, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 55, vertical_angle: 0.9021606904, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 56, vertical_angle: 0.9183922524, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 57, vertical_angle: 0.9347983474, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 58, vertical_angle: 0.9512044423, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 59, vertical_angle: 0.9677850702, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 60, vertical_angle: 0.9838420993, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 61, vertical_angle: 1.000073661, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 62, vertical_angle: 1.016479756, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 63, vertical_angle: 1.032885851, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 64, vertical_angle: 1.049291946, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 65, vertical_angle: 1.065523508, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 66, vertical_angle: 1.081929603, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 67, vertical_angle: 1.098335698, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 68, vertical_angle: 1.11456726, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 69, vertical_angle: 1.131147888, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 70, vertical_angle: 1.147728516, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 71, vertical_angle: 1.163960078, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 72, vertical_angle: 1.180715239, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 73, vertical_angle: 1.197295867, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 74, vertical_angle: 1.214051028, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 75, vertical_angle: 1.230631656, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 76, vertical_angle: 1.247212283, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 77, vertical_angle: 1.263967444, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 78, vertical_angle: 1.280548072, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 79, vertical_angle: 1.297303233, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 80, vertical_angle: 1.314058394, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 81, vertical_angle: 1.330639022, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 82, vertical_angle: 1.34721965, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 83, vertical_angle: 1.363800278, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 84, vertical_angle: 1.38003184, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 85, vertical_angle: 1.396612467, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 86, vertical_angle: 1.413018562, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 87, vertical_angle: 1.429424657, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 88, vertical_angle: 1.445830752, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 89, vertical_angle: 1.462236847, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 90, vertical_angle: 1.478293876, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 91, vertical_angle: 1.494699971, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 92, vertical_angle: 1.510931533, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 93, vertical_angle: 1.527512161, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 94, vertical_angle: 1.543918256, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
+  - { ring: 95, vertical_angle: 1.560324351, vertical_offset: 0, horizontal_offset: 0, azimuthal_offset: 0, resolution: 0 }
