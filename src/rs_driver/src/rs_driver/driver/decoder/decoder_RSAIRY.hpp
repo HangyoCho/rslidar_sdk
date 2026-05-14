@@ -32,6 +32,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #pragma once
 #include <rs_driver/driver/decoder/decoder_mech.hpp>
+#include <cmath>
 #include <iomanip>
 
 namespace robosense
@@ -187,6 +188,13 @@ protected:
   ///< If size matches the channel count at decode time, distance is corrected as
   ///<     distance := distance - chan_range_offsets_[chan_id]
   std::vector<float> chan_range_offsets_;
+
+  ///< Per-channel alice-lri full intrinsics. If use_alice_intrinsics_ is true,
+  ///< the decoder replaces firmware-derived per-channel angles with alice-lri's
+  ///< range-dependent model (see decoder math branch below). chan_range_offsets_
+  ///< is ignored when alice intrinsics are active (alice absorbs range bias).
+  bool use_alice_intrinsics_{false};
+  std::vector<AliceScanline> alice_scanlines_;
 };
 
 template <typename T_PointCloud>
@@ -314,6 +322,15 @@ inline DecoderRSAIRY<T_PointCloud>::DecoderRSAIRY(const RSDecoderParam& param)
     RS_INFO << "DecoderRSAIRY: per-channel range bias loaded ("
             << chan_range_offsets_.size() << " entries, " << n_nz
             << " non-zero, max|offset|=" << (max_abs * 1000.0f) << " mm)" << RS_REND;
+  }
+
+  use_alice_intrinsics_ = param.use_alice_intrinsics;
+  alice_scanlines_ = param.alice_scanlines;
+  if (use_alice_intrinsics_ && !alice_scanlines_.empty())
+  {
+    RS_INFO << "DecoderRSAIRY: alice-lri intrinsics active ("
+            << alice_scanlines_.size() << " scanlines, range-bias path bypassed)"
+            << RS_REND;
   }
 }
 
@@ -578,18 +595,62 @@ inline bool DecoderRSAIRY<T_PointCloud>::internDecodeMsopPkt(const uint8_t* pack
       double chan_ts = block_ts + this->mech_const_param_.CHAN_TSS[chan_id];
       int32_t angle_horiz = block_az + (int32_t)((float)block_az_diff * this->mech_const_param_.CHAN_AZIS[chan_id]);
 
-      int32_t angle_vert = this->chan_angles_.vertAdjust(chan_id);
-      int32_t angle_horiz_final = this->chan_angles_.horizAdjust(chan_id, angle_horiz);
       uint16_t u16RawDistance = ntohs(channel.distance);
       uint16_t u16Distance = u16RawDistance & 0x3FFF;
       uint8_t feature = (u16RawDistance >> 14) & 0x03;
       float distance = u16Distance * this->const_param_.DISTANCE_RES;
 
-      // Per-channel range bias correction. Applied at the ToF/range level so the
-      // resulting (x,y,z) is the same as if the channel had no bias to begin with.
-      if (chan_id < chan_range_offsets_.size())
+      int32_t angle_vert;
+      int32_t angle_horiz_final;
+
+      // Path B: alice-lri intrinsics injection.
+      // When active, replace the firmware-derived per-channel angles with
+      // alice-lri's range-dependent model (RangeImageUtils.cpp:71-79):
+      //   phi   = vertical_angle  + vertical_offset  / range
+      //   theta = block_azimuth  + horizontal_offset / range_xy + azimuthal_offset
+      // The drum-edge term (Rxy*cos/sin(angle_horiz)) downstream is preserved
+      // so the world-frame convention is unchanged.
+      if (use_alice_intrinsics_ && chan_id < alice_scanlines_.size() && distance > 0.0f)
       {
-        distance -= chan_range_offsets_[chan_id];
+        constexpr float kRadToLut = 5729.5779513082325f;  // rad -> 0.01° (LUT unit)
+        constexpr float kLutToRad = 0.0001745329251994f;  // 0.01° (LUT unit) -> rad
+        const AliceScanline& sc = alice_scanlines_[chan_id];
+        const float r = distance;
+
+        // Vertical correction
+        const float vert_rad = sc.vertical_angle + sc.vertical_offset / r;
+        int32_t vert_int = static_cast<int32_t>(std::lround(vert_rad * kRadToLut));
+        // Clamp into LUT range [ANGLE_MIN=-9000, ANGLE_MAX=45000)
+        if (vert_int < -8999) vert_int = -8999;
+        else if (vert_int > 44999) vert_int = 44999;
+        angle_vert = vert_int;
+
+        // range_xy via LUT (consistent with downstream x/y formulas)
+        const float cos_vert = COS(angle_vert);
+        const float range_xy = r * cos_vert;
+
+        // Horizontal correction (use angle_horiz as the rotating-base reference)
+        const float base_rad = static_cast<float>(angle_horiz) * kLutToRad;
+        const float dtheta = (range_xy > 1e-6f) ? (sc.horizontal_offset / range_xy) : 0.0f;
+        const float horiz_rad = base_rad + dtheta + sc.azimuthal_offset;
+        int32_t horiz_int = static_cast<int32_t>(std::lround(horiz_rad * kRadToLut));
+        // Wrap to [0, 36000)
+        horiz_int = ((horiz_int % 36000) + 36000) % 36000;
+        angle_horiz_final = horiz_int;
+        // distance is unchanged: alice's geometric offsets absorb range bias.
+      }
+      else
+      {
+        angle_vert = this->chan_angles_.vertAdjust(chan_id);
+        angle_horiz_final = this->chan_angles_.horizAdjust(chan_id, angle_horiz);
+
+        // Legacy per-channel range bias correction. Applied at the ToF/range
+        // level so the resulting (x,y,z) is the same as if the channel had no
+        // bias to begin with. Skipped when alice intrinsics are active.
+        if (chan_id < chan_range_offsets_.size())
+        {
+          distance -= chan_range_offsets_[chan_id];
+        }
       }
 
       if (this->distance_section_.in(distance) && this->scan_section_.in(angle_horiz_final))

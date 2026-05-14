@@ -173,6 +173,62 @@ inline void SourceDriver::init(const YAML::Node& config)
     }
   }
 
+  // Full alice-lri per-channel intrinsics (optional). If provided and enabled,
+  // supersedes range_offsets_yaml: the decoder uses 5 params per channel
+  // (vertical/horizontal offsets, vertical/azimuthal angles, resolution) and
+  // ignores chan_range_offsets entirely (alice-lri's offsets absorb range bias).
+  std::string alice_intrinsics_yaml;
+  yamlRead<std::string>(driver_config, "alice_intrinsics_yaml", alice_intrinsics_yaml, "");
+  if (!alice_intrinsics_yaml.empty())
+  {
+#ifdef PROJECT_PATH
+    if (alice_intrinsics_yaml.front() != '/')
+    {
+      alice_intrinsics_yaml = std::string(PROJECT_PATH) + "/" + alice_intrinsics_yaml;
+    }
+#endif
+    try
+    {
+      YAML::Node y = YAML::LoadFile(alice_intrinsics_yaml);
+      const int rc = y["ring_count"] ? y["ring_count"].as<int>() : 0;
+      const bool enable_flag = y["use_alice_intrinsics"] ? y["use_alice_intrinsics"].as<bool>() : true;
+      if (rc > 0 && y["scanlines"] && enable_flag)
+      {
+        auto& vec = driver_param.decoder_param.alice_scanlines;
+        vec.assign(rc, AliceScanline{});
+        for (const auto& s : y["scanlines"])
+        {
+          const int idx = s["ring"] ? s["ring"].as<int>() : -1;
+          if (idx < 0 || idx >= rc) continue;
+          AliceScanline sc;
+          sc.vertical_offset   = s["vertical_offset"]   ? s["vertical_offset"].as<float>()   : 0.0f;
+          sc.vertical_angle    = s["vertical_angle"]    ? s["vertical_angle"].as<float>()    : 0.0f;
+          sc.horizontal_offset = s["horizontal_offset"] ? s["horizontal_offset"].as<float>() : 0.0f;
+          sc.azimuthal_offset  = s["azimuthal_offset"]  ? s["azimuthal_offset"].as<float>()  : 0.0f;
+          sc.resolution        = s["resolution"]        ? s["resolution"].as<int>()          : 0;
+          vec[idx] = sc;
+        }
+        driver_param.decoder_param.use_alice_intrinsics = true;
+        // alice's model absorbs range bias; disable the legacy 1D correction
+        // to avoid double-correction.
+        driver_param.decoder_param.chan_range_offsets.clear();
+        RS_INFO << "Loaded alice-lri intrinsics from " << alice_intrinsics_yaml
+                << " (" << vec.size() << " scanlines, supersedes range_offsets_yaml)"
+                << RS_REND;
+      }
+      else
+      {
+        RS_WARNING << "alice_intrinsics_yaml has no ring_count/scanlines or is disabled: "
+                   << alice_intrinsics_yaml << RS_REND;
+      }
+    }
+    catch (const std::exception& e)
+    {
+      RS_ERROR << "Failed to parse alice_intrinsics_yaml '" << alice_intrinsics_yaml
+               << "': " << e.what() << RS_REND;
+    }
+  }
+
   // transform
   yamlRead<float>(driver_config, "x", driver_param.decoder_param.transform_param.x, 0);
   yamlRead<float>(driver_config, "y", driver_param.decoder_param.transform_param.y, 0);

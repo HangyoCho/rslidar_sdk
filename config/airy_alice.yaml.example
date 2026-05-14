@@ -1,0 +1,27 @@
+# ALICE-LRI per-channel intrinsics for RoboSense AIRY (96-channel).
+#
+# Generate this file with:
+#   alice-calibrate-bag <bag> --rslidar-alice-yaml airy_alice.yaml
+#
+# Activate by setting in config/config.yaml:
+#   alice_intrinsics_yaml: config/airy_alice.yaml
+#
+# Schema:
+#   ring_count            : number of scanlines (must equal sensor channel count)
+#   use_alice_intrinsics  : true to activate; false / missing disables
+#   scanlines             : list, one entry per channel
+#     ring                : channel index (0-based)
+#     vertical_offset     : [m]   per-channel emitter z offset
+#     vertical_angle      : [rad] per-channel elevation
+#     horizontal_offset   : [m]   per-channel emitter radial offset
+#     azimuthal_offset    : [rad] per-channel yaw offset
+#     resolution          : [int] per-rotation azimuth samples (informational)
+#
+# When use_alice_intrinsics is true the decoder bypasses chan_range_offsets
+# (alice-lri's geometric offsets absorb the range bias).
+
+ring_count: 96
+use_alice_intrinsics: false   # set true after populating the values below
+scanlines:
+  - { ring: 0,  vertical_offset: 0.0, vertical_angle: 0.0, horizontal_offset: 0.0, azimuthal_offset: 0.0, resolution: 0 }
+  # ... 95 more entries (one per channel)

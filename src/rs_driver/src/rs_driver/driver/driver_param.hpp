@@ -221,6 +221,22 @@ struct RSTransformParam  ///< The Point transform parameter
   }
 };
 
+///< Per-channel intrinsic parameters estimated by alice-lri.
+///< Together they describe each scanline's emitter as: emitter at
+///<   ray_origin_i  = (horizontal_offset, 0, vertical_offset)   (sensor frame)
+///<   ray_direction = phi (elevation) , theta (azimuth)
+///< where phi = vertical_angle + vertical_offset/range  and
+///<       theta = block_azimuth + horizontal_offset/range_xy + azimuthal_offset.
+///< See: alice-lri RangeImageUtils.cpp:54-84 (unprojection).
+struct AliceScanline
+{
+  float vertical_offset = 0.0f;     ///< [m]   per-channel emitter z offset
+  float vertical_angle = 0.0f;      ///< [rad] per-channel elevation
+  float horizontal_offset = 0.0f;   ///< [m]   per-channel emitter radial offset
+  float azimuthal_offset = 0.0f;    ///< [rad] per-channel yaw offset
+  int32_t resolution = 0;           ///< [count] per-rotation azimuth samples (informational)
+};
+
 struct RSDecoderParam  ///< LiDAR decoder parameter
 {
   float min_distance = 0.0f;     ///< min/max distances of point cloud range. valid if min distance or max distance > 0
@@ -247,6 +263,14 @@ struct RSDecoderParam  ///< LiDAR decoder parameter
   ///< laser_number of the lidar, the decoder subtracts chan_range_offsets[chan_id]
   ///< from the raw measured range BEFORE computing x/y/z. Empty => no correction.
   std::vector<float> chan_range_offsets;
+
+  ///< Per-channel alice-lri full intrinsics. If use_alice_intrinsics is true and
+  ///< alice_scanlines.size() matches the channel count at decode time, the decoder
+  ///< replaces firmware-derived per-channel angles with alice-lri's range-dependent
+  ///< model and ignores chan_range_offsets (alice's offsets absorb range bias).
+  ///< Empty / disabled => decoder falls back to firmware + chan_range_offsets behavior.
+  bool use_alice_intrinsics = false;
+  std::vector<AliceScanline> alice_scanlines;
 
   void print() const
   {
