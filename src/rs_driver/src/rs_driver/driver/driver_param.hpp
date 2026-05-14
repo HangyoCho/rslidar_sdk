@@ -272,6 +272,15 @@ struct RSDecoderParam  ///< LiDAR decoder parameter
   bool use_alice_intrinsics = false;
   std::vector<AliceScanline> alice_scanlines;
 
+  ///< Per-channel VERTICAL ANGLE override (radians). If non-empty and size matches
+  ///< the laser_number, the decoder uses this value as the channel's elevation,
+  ///< while leaving the firmware horizontal correction (horizAdjust) intact.
+  ///< Designed for the simple case where only the per-channel elevation needs to
+  ///< be overridden (e.g. from the Airy datasheet), without paying the all-or-
+  ///< nothing cost of alice-lri's full 5-parameter model. Coexists with
+  ///< chan_range_offsets. Ignored if use_alice_intrinsics is active.
+  std::vector<float> chan_vertical_angles_rad;
+
   void print() const
   {
     RS_INFO << "------------------------------------------------------" << RS_REND;

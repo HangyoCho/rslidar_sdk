@@ -35,6 +35,14 @@ lidar:
                                    #  Empty / missing => no correction (raw output).
       range_offsets_yaml: config/srx2_airy.yaml   # Relative to the rslidar_sdk source root (PROJECT_PATH). Empty disables.
 
+                                   #  Per-channel VERTICAL ANGLE override (driver-side).
+                                   #  YAML schema: ring_count + rings: [{ring, vertical_angle}] (DEGREES).
+                                   #  Replaces firmware vertAdjust per channel; horizAdjust stays
+                                   #  intact (so points don't fan out along the rotation axis).
+                                   #  Coexists with range_offsets_yaml. Ignored when
+                                   #  alice_intrinsics_yaml below is active.
+      vertical_angles_yaml: config/airy_datasheet_vertical_angles.yaml   # Datasheet override. Empty disables.
+
                                    #  When msg_source is 3, the following parameters will be used
       pcap_repeat: true            #  true: The pcap bag will repeat play   
       pcap_rate: 1.0               #  Rate to read the pcap file

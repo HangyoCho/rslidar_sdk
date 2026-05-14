@@ -195,6 +195,11 @@ protected:
   ///< is ignored when alice intrinsics are active (alice absorbs range bias).
   bool use_alice_intrinsics_{false};
   std::vector<AliceScanline> alice_scanlines_;
+
+  ///< Per-channel vertical-angle override (radians). When non-empty and alice
+  ///< intrinsics are NOT active, replaces the firmware-derived vertical angle
+  ///< (vertAdjust) while keeping horizAdjust and chan_range_offsets_ in effect.
+  std::vector<float> chan_vertical_angles_rad_;
 };
 
 template <typename T_PointCloud>
@@ -331,6 +336,23 @@ inline DecoderRSAIRY<T_PointCloud>::DecoderRSAIRY(const RSDecoderParam& param)
     RS_INFO << "DecoderRSAIRY: alice-lri intrinsics active ("
             << alice_scanlines_.size() << " scanlines, range-bias path bypassed)"
             << RS_REND;
+  }
+
+  chan_vertical_angles_rad_ = param.chan_vertical_angles_rad;
+  if (!chan_vertical_angles_rad_.empty() && !use_alice_intrinsics_)
+  {
+    float v_min = chan_vertical_angles_rad_[0];
+    float v_max = chan_vertical_angles_rad_[0];
+    for (float v : chan_vertical_angles_rad_)
+    {
+      if (v < v_min) v_min = v;
+      if (v > v_max) v_max = v;
+    }
+    constexpr float kRadToDeg = 57.29577951308232f;
+    RS_INFO << "DecoderRSAIRY: per-channel vertical-angle override loaded ("
+            << chan_vertical_angles_rad_.size() << " entries, range ["
+            << (v_min * kRadToDeg) << "deg, " << (v_max * kRadToDeg)
+            << "deg]; firmware horizontal correction preserved)" << RS_REND;
   }
 }
 
@@ -641,7 +663,24 @@ inline bool DecoderRSAIRY<T_PointCloud>::internDecodeMsopPkt(const uint8_t* pack
       }
       else
       {
-        angle_vert = this->chan_angles_.vertAdjust(chan_id);
+        // Vertical: optionally overridden by chan_vertical_angles_rad_; else firmware.
+        if (chan_id < chan_vertical_angles_rad_.size())
+        {
+          constexpr float kRadToLut = 5729.5779513082325f;  // rad -> 0.01° LUT unit
+          int32_t vi = static_cast<int32_t>(
+              std::lround(chan_vertical_angles_rad_[chan_id] * kRadToLut));
+          if (vi < -8999) vi = -8999;
+          else if (vi > 44999) vi = 44999;
+          angle_vert = vi;
+        }
+        else
+        {
+          angle_vert = this->chan_angles_.vertAdjust(chan_id);
+        }
+
+        // Horizontal correction always from firmware (preserves per-channel
+        // azimuth offset; that's what makes a row of points stay on a vertical
+        // wall instead of fanning out along the rotation axis).
         angle_horiz_final = this->chan_angles_.horizAdjust(chan_id, angle_horiz);
 
         // Legacy per-channel range bias correction. Applied at the ToF/range

@@ -112,6 +112,44 @@ exporter (`alice-calibrate-bag --rslidar-alice-yaml ...`).
 ignored. Use Path A for pure range bias, Path B when channel geometry is
 the problem.
 
+## Path C — vertical-angle-only override (`vertical_angles_yaml`)
+
+Path B (alice) overrides **everything** — vertical angle, vertical offset,
+horizontal offset, azimuthal offset. If you only have a vertical-angle
+table (e.g. the Airy datasheet), feeding it through Path B with the other
+fields at 0 zeros out the firmware's per-channel **horizontal** correction
+and makes points fan out along the rotation axis.
+
+Path C exists for exactly that case: it replaces only the per-channel
+vertical angle and leaves `horizAdjust` (firmware horizontal) intact.
+Coexists with `range_offsets_yaml`.
+
+Schema (human-readable, degrees):
+
+```yaml
+ring_count: 96
+rings:
+  - { ring: 0,  vertical_angle: -0.07 }
+  - { ring: 1,  vertical_angle:  0.88 }
+  # ... one entry per channel
+```
+
+Activate:
+
+```yaml
+driver:
+  # ...
+  vertical_angles_yaml: config/airy_datasheet_vertical_angles.yaml
+```
+
+The bundled `config/airy_datasheet_vertical_angles.yaml` is built from the
+Airy User Guide Appendix D table; regenerate with
+`lidar-range-cal-export-vertical-angles --from datasheet -o <path>`.
+
+**Precedence:** Path B (alice) > Path C (vertical override) > firmware.
+`range_offsets_yaml` (Path A) still applies in Path-C mode (vertical
+override is angle-only; range bias is orthogonal).
+
 ---
 
 # 1 **rslidar_sdk**

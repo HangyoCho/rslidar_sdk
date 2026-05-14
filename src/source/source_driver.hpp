@@ -34,6 +34,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "source/source.hpp"
 
+#include <limits>
+
 #include <rs_driver/api/lidar_driver.hpp>
 #include <rs_driver/utility/sync_queue.hpp>
 
@@ -225,6 +227,76 @@ inline void SourceDriver::init(const YAML::Node& config)
     catch (const std::exception& e)
     {
       RS_ERROR << "Failed to parse alice_intrinsics_yaml '" << alice_intrinsics_yaml
+               << "': " << e.what() << RS_REND;
+    }
+  }
+
+  // Per-channel VERTICAL ANGLE override (optional, simple schema). When set,
+  // the decoder uses the listed vertical angle for each channel and leaves the
+  // firmware horizontal correction (horizAdjust) intact. Coexists with
+  // range_offsets_yaml. Ignored when alice intrinsics above are active.
+  //
+  //   YAML schema (per-channel vertical angle in DEGREES):
+  //     ring_count: 96
+  //     rings:
+  //       - { ring: 0,  vertical_angle: -0.07 }
+  //       - { ring: 1,  vertical_angle:  0.88 }
+  //       # ... one entry per channel
+  std::string vertical_angles_yaml;
+  yamlRead<std::string>(driver_config, "vertical_angles_yaml", vertical_angles_yaml, "");
+  if (!vertical_angles_yaml.empty())
+  {
+#ifdef PROJECT_PATH
+    if (vertical_angles_yaml.front() != '/')
+    {
+      vertical_angles_yaml = std::string(PROJECT_PATH) + "/" + vertical_angles_yaml;
+    }
+#endif
+    try
+    {
+      YAML::Node y = YAML::LoadFile(vertical_angles_yaml);
+      const int rc = y["ring_count"] ? y["ring_count"].as<int>() : 0;
+      if (rc > 0 && y["rings"])
+      {
+        constexpr float kDegToRad = 0.017453292519943295f;
+        std::vector<float>& v = driver_param.decoder_param.chan_vertical_angles_rad;
+        v.assign(rc, std::numeric_limits<float>::quiet_NaN());
+        for (const auto& r : y["rings"])
+        {
+          const int idx = r["ring"] ? r["ring"].as<int>() : -1;
+          if (idx < 0 || idx >= rc) continue;
+          if (!r["vertical_angle"]) continue;
+          v[idx] = r["vertical_angle"].as<float>() * kDegToRad;
+        }
+        // Compact: any channel left as NaN stays at firmware default.
+        // Decoder handles missing by skipping override when size mismatches; we
+        // therefore zero-out any leftover NaN entries by clearing the vector if
+        // ANY entry is missing (caller can also choose to allow partial — kept
+        // strict here for predictability).
+        bool any_nan = false;
+        for (float x : v) if (x != x) { any_nan = true; break; }
+        if (any_nan)
+        {
+          RS_WARNING << "vertical_angles_yaml has missing rings; override DISABLED. "
+                     << "Provide all " << rc << " entries: " << vertical_angles_yaml
+                     << RS_REND;
+          v.clear();
+        }
+        else
+        {
+          RS_INFO << "Loaded per-channel vertical-angle override from "
+                  << vertical_angles_yaml << " (" << v.size() << " entries)" << RS_REND;
+        }
+      }
+      else
+      {
+        RS_WARNING << "vertical_angles_yaml has no ring_count/rings fields: "
+                   << vertical_angles_yaml << RS_REND;
+      }
+    }
+    catch (const std::exception& e)
+    {
+      RS_ERROR << "Failed to parse vertical_angles_yaml '" << vertical_angles_yaml
                << "': " << e.what() << RS_REND;
     }
   }
