@@ -72,6 +72,46 @@ is a one-line edit in their respective `decoder_<MODEL>.hpp`.
    `/rslidar_points` is now corrected at the ToF/range level. No corrector
    node downstream.
 
+## Path B — alice-lri per-channel intrinsics (RSAIRY)
+
+The range-offset table above (Path A) only corrects the **range** of each
+channel. When a channel's *geometry* is off — its vertical angle, emitter
+offset, or azimuth — a 1-D range offset cannot fix it. For RSAIRY the
+decoder has a second path that replaces the firmware-derived per-channel
+angles with alice-lri's range-dependent 5-parameter model:
+
+```
+phi   = vertical_angle  + vertical_offset  / range
+theta = block_azimuth   + horizontal_offset / range_xy + azimuthal_offset
+```
+
+- `driver_param.hpp` — `AliceScanline` struct + `use_alice_intrinsics` /
+  `alice_scanlines` on `RSDecoderParam`.
+- `decoder_RSAIRY.hpp` — Path B branch in the channel loop. When active it
+  **supersedes** `chan_range_offsets` (alice's geometric offsets absorb the
+  range bias) and leaves `distance` unchanged. The drum-edge term and
+  world-frame convention downstream are preserved.
+- `source_driver.hpp` — parses `alice_intrinsics_yaml`
+  (`ring_count` / `use_alice_intrinsics` / `scanlines`) and, when loaded,
+  clears `chan_range_offsets` to avoid double-correction.
+
+Activate by setting in `config/config.yaml`:
+
+```yaml
+driver:
+  # ...
+  alice_intrinsics_yaml: config/airy_alice.yaml
+```
+
+The YAML schema (one entry per channel) is documented in
+`config/airy_alice.yaml.example`. Generate a full file with alice-lri's
+exporter (`alice-calibrate-bag --rslidar-alice-yaml ...`).
+
+**Path A vs Path B:** they are mutually exclusive — when
+`alice_intrinsics_yaml` is non-empty and enabled, `range_offsets_yaml` is
+ignored. Use Path A for pure range bias, Path B when channel geometry is
+the problem.
+
 ---
 
 # 1 **rslidar_sdk**
