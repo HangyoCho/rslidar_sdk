@@ -112,6 +112,30 @@ exporter (`alice-calibrate-bag --rslidar-alice-yaml ...`).
 ignored. Use Path A for pure range bias, Path B when channel geometry is
 the problem.
 
+### Ready-made default: datasheet vertical angles
+
+`config/airy_datasheet_angles.yaml` is a ready-to-use Path-B file built from
+the Airy User Guide datasheet (Appendix D) — per-channel **vertical angle
+only**, all emitter / azimuth offsets left at 0. No estimation, no bag
+needed. Use it when the dominant scan error is channel *elevation*
+(geometry) and you don't have a full alice-lri calibration yet.
+
+```yaml
+driver:
+  # ...
+  alice_intrinsics_yaml: config/airy_datasheet_angles.yaml
+```
+
+Regenerate it any time with the `lidar-range-cal` tool:
+
+```bash
+lidar-range-cal-export-alice --from datasheet -o config/airy_datasheet_angles.yaml
+```
+
+Note that the datasheet angles are *nominal design values*; a per-unit
+factory calibration (or an estimated table from alice-lri) will be more
+accurate. This file is the convenient baseline.
+
 ---
 
 # 1 **rslidar_sdk**
