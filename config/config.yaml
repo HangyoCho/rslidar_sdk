@@ -49,7 +49,7 @@ lidar:
                                    #  elevation) rather than range. Regenerate with:
                                    #    lidar-range-cal-export-alice --from datasheet -o config/airy_datasheet_angles.yaml
                                    #  NOTE: enabling it disables range_offsets_yaml above.
-      alice_intrinsics_yaml: ""    # Relative to PROJECT_PATH. Empty disables.
+      alice_intrinsics_yaml: "config/airy_datasheet_angles.yaml"    # Relative to PROJECT_PATH. Empty disables.
 
                                    #  When msg_source is 3, the following parameters will be used
       pcap_repeat: true            #  true: The pcap bag will repeat play   
