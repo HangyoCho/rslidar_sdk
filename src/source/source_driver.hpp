@@ -33,6 +33,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #pragma once
 
 #include "source/source.hpp"
+#include "utility/box_filter.hpp"
 
 #include <limits>
 
@@ -77,6 +78,7 @@ protected:
 #endif
   std::thread point_cloud_process_thread_;
   bool to_exit_process_;
+  BoxFilter box_filter_;
 };
 
 SourceDriver::SourceDriver(SourceType src_type)
@@ -301,6 +303,11 @@ inline void SourceDriver::init(const YAML::Node& config)
     }
   }
 
+  // Post-decode box crop filter (ego-vehicle removal). Parsed here, applied in
+  // processPointCloud() right before sendPointCloud(). Boxes are defined in
+  // the output frame (i.e. after the transform below).
+  box_filter_.init(driver_config);
+
   // transform
   yamlRead<float>(driver_config, "x", driver_param.decoder_param.transform_param.x, 0);
   yamlRead<float>(driver_config, "y", driver_param.decoder_param.transform_param.y, 0);
@@ -430,8 +437,9 @@ void SourceDriver::processPointCloud()
     {
       continue;
     }
+    box_filter_.apply(*msg);
     sendPointCloud(msg);
-    
+
     free_point_cloud_queue_.push(msg);
   }
 }
